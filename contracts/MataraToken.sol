@@ -9,9 +9,14 @@ contract MataraToken is ERC20Capped, ERC20Burnable {
     address payable public owner;
     uint256 public blockReward;
     constructor(uint256 cap, uint256 reward) ERC20("MataraToken", "MTR") ERC20Capped(cap * (10 ** decimals())){
-        owner = msg.sender;
+        owner = payable(msg.sender);
         _mint(owner, 70000000 * (10 ** decimals()));
         blockReward = reward * (10 ** decimals());
+    }
+
+    function _mint(address account, uint256 amount) internal virtual override (ERC20Capped, ERC20) {
+        require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
+        super._mint(account, amount);
     }
 
     function _mintMinerReward() internal {
