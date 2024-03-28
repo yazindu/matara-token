@@ -81,7 +81,7 @@ describe("MataraToken contract", function () {
 
             // Check balances.
             const finalOwnerBalance = await mataraToken.balanceOf(owner.getAddress());
-            expect(finalOwnerBalance).to.equal(initialOwnerBalance.sub(150));
+            expect(finalOwnerBalance).to.equal(initialOwnerBalance - BigInt(150));
 
             const addr1Balance = await mataraToken.balanceOf(addr1.getAddress());
             expect(addr1Balance).to.equal(100);
